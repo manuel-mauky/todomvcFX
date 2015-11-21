@@ -1,0 +1,17 @@
+
+subprojects {
+    apply plugin: "java"
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+	    jcenter()
+    }
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.9'
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import java.net.URL?>
+<HBox fx:controller="todomvcfx.referenceimpl.controllers.ItemController" fx:id="root" alignment="CENTER_LEFT"
+      minHeight="-Infinity" minWidth="-Infinity" styleClass="item_root"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <CheckBox fx:id="completed" mnemonicParsing="false"/>
+    <StackPane alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+        <HBox fx:id="contentBox" styleClass="content_box">
+            <Label fx:id="contentLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   text="Label" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete">
+                <graphic>
+                    <FontAwesomeIconView glyphName="CLOSE" size="1.5em" styleClass="close_icon"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <TextField fx:id="contentInput" promptText="What needs to be done?" visible="false"/>
+    </StackPane>
+    <stylesheets>
+        <URL value="@itemview.css"/>
+    </stylesheets>
+</HBox>
