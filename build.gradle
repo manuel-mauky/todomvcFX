@@ -9,6 +9,11 @@ subprojects {
         mavenLocal()
 	    jcenter()
     }
+
+    dependencies {
+        compile 'de.jensd:fontawesomefx:8.5'
+        testCompile project(":tests")
+    }
 }
 
 

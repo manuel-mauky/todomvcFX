@@ -17,6 +17,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        Repository.getSingleton().itemsProperty().clear();
+
+
         final String pathToMainFxml = "/Main.fxml";
 
         final URL mainFxmlUrl = this.getClass().getResource(pathToMainFxml);
