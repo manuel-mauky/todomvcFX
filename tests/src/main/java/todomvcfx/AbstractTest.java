@@ -362,6 +362,8 @@ public abstract class AbstractTest extends FxRobot {
         write("todo1").push(KeyCode.ENTER);
         write("todo2").push(KeyCode.ENTER);
         write("todo3").push(KeyCode.ENTER);
+
+        verifyThat("#items", hasItems(4));
     }
 
 }

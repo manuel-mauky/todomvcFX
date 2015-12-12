@@ -25,8 +25,11 @@ public class ItemController {
 
     private TodoItem todoItem;
 
-    public ItemController(TodoItem item) {
+    private final Repository repository;
+
+    public ItemController(TodoItem item, Repository repository) {
         this.todoItem = item;
+        this.repository = repository;
     }
 
     public void initialize() {
@@ -70,6 +73,6 @@ public class ItemController {
     }
 
     public void delete() {
-        Repository.getSingleton().deleteItem(todoItem);
+        repository.deleteItem(todoItem);
     }
 }

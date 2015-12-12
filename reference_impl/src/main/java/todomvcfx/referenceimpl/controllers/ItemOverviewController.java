@@ -24,7 +24,10 @@ public class ItemOverviewController {
 
     private final URL itemFxmlUrl;
 
-    public ItemOverviewController() {
+    private final Repository repository;
+
+    public ItemOverviewController(Repository repository) {
+        this.repository = repository;
         final String pathToItemFxml = "/item/Item.fxml";
 
         itemFxmlUrl = this.getClass().getResource(pathToItemFxml);
@@ -35,7 +38,7 @@ public class ItemOverviewController {
     }
 
     public void initialize() {
-        items.setItems(Repository.getSingleton().itemsProperty());
+        items.setItems(repository.itemsProperty());
 
 
         items.setCellFactory(new Callback<ListView<TodoItem>, ListCell<TodoItem>>() {
@@ -75,7 +78,7 @@ public class ItemOverviewController {
 
         try {
 
-            ItemController itemController = new ItemController(item);
+            ItemController itemController = new ItemController(item, repository);
 
             fxmlLoader.setController(itemController);
             fxmlLoader.load();

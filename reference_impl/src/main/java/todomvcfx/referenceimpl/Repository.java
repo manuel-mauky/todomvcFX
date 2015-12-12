@@ -7,16 +7,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 
+import javax.inject.Singleton;
+
+@Singleton
 public class Repository {
-
-    private static final Repository SINGLETON = new Repository();
-
-    public static Repository getSingleton() {
-        return SINGLETON;
-    }
-
-    private Repository() {
-    }
 
     private ObservableList<TodoItem> allItems = FXCollections.observableArrayList(item -> new Observable[]{item.doneProperty()});
     private FilteredList<TodoItem> completedItems = new FilteredList<TodoItem>(allItems, TodoItem::isDone);

@@ -1,5 +1,6 @@
 package todomvcfx.referenceimpl;
 
+import eu.lestard.easydi.EasyDI;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,8 +18,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Repository.getSingleton().itemsProperty().clear();
-
+        EasyDI context = new EasyDI();
 
         final String pathToMainFxml = "/Main.fxml";
 
@@ -29,6 +29,8 @@ public class App extends Application {
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(mainFxmlUrl);
+
+        fxmlLoader.setControllerFactory(context::getInstance);
 
         fxmlLoader.load();
 

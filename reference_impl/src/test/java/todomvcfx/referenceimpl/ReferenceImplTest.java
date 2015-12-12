@@ -10,4 +10,6 @@ public class ReferenceImplTest extends AbstractTest {
     public Class<? extends Application> getAppClass() {
         return App.class;
     }
+
+
 }

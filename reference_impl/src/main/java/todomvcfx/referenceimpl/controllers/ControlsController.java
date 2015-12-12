@@ -12,23 +12,29 @@ public class ControlsController {
     @FXML
     public Label itemsLeftLabel;
 
+    private final Repository repository;
+
+    public ControlsController(Repository repository) {
+        this.repository = repository;
+    }
+
     public void initialize() {
-        ListProperty<TodoItem> openItemsProperty = new SimpleListProperty<>(Repository.getSingleton().openItemsProperty());
+        ListProperty<TodoItem> openItemsProperty = new SimpleListProperty<>(repository.openItemsProperty());
 
         itemsLeftLabel.textProperty().bind(
                 Bindings.concat(openItemsProperty.sizeProperty().asString(), " items left"));
     }
 
     public void all() {
-        Repository.getSingleton().showAllItems();
+        repository.showAllItems();
     }
 
     public void active() {
-        Repository.getSingleton().showOpenItems();
+        repository.showOpenItems();
     }
 
     public void completed() {
-        Repository.getSingleton().showCompletedItems();
+        repository.showCompletedItems();
     }
 }
 

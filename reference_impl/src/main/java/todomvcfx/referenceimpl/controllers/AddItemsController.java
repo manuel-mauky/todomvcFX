@@ -13,6 +13,13 @@ public class AddItemsController {
     @FXML
     public TextField addInput;
 
+    private final Repository repository;
+
+    public AddItemsController(Repository repository) {
+        this.repository = repository;
+    }
+
+
     public void initialize() {
 
         addInput.setOnAction(event -> {
@@ -25,7 +32,7 @@ public class AddItemsController {
 
             // create and add item
             TodoItem newItem = new TodoItem(currentText);
-            Repository.getSingleton().addItem(newItem);
+            repository.addItem(newItem);
 
             // reset input
             addInput.setText("");
@@ -35,7 +42,7 @@ public class AddItemsController {
 
         selectAll.setOnAction(event -> {
             final boolean selected = selectAll.isSelected();
-            Repository.getSingleton().allItemsProperty().forEach(item -> {
+            repository.allItemsProperty().forEach(item -> {
                 item.setDone(selected);
             });
 
@@ -46,7 +53,7 @@ public class AddItemsController {
         });
 
 
-        Repository.getSingleton().allItemsProperty().addListener((ListChangeListener<TodoItem>) c -> {
+        repository.allItemsProperty().addListener((ListChangeListener<TodoItem>) c -> {
             c.next();
 
             // if the checkbox is marked...
@@ -54,14 +61,14 @@ public class AddItemsController {
 
                 // we check if there is any item that is not "done" now.
                 // If this is the case, we uncheck the checkbox
-                selectAll.setSelected(!Repository.getSingleton().allItemsProperty().stream()
+                selectAll.setSelected(!repository.allItemsProperty().stream()
                         .anyMatch(item -> !item.isDone()));
             } else {
 
                 // if the checkbox is not marked yet
                 // we check if there all items are done now.
                 // if this is the case, we mark the checkbox.
-                selectAll.setSelected(Repository.getSingleton().allItemsProperty().stream()
+                selectAll.setSelected(repository.allItemsProperty().stream()
                         .allMatch(item -> item.isDone()));
             }
         });
