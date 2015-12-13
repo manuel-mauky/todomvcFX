@@ -56,6 +56,10 @@ public class AddItemsController {
         repository.allItemsProperty().addListener((ListChangeListener<TodoItem>) c -> {
             c.next();
 
+            selectAll.setVisible(! repository.allItemsProperty().isEmpty());
+
+
+
             // if the checkbox is marked...
             if(selectAll.isSelected()) {
 

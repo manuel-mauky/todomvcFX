@@ -6,7 +6,7 @@
 <?import java.net.URL?>
 <HBox fx:controller="todomvcfx.referenceimpl.controllers.AddItemsController" styleClass="add_item_root"
       alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-    <CheckBox fx:id="selectAll" mnemonicParsing="false"/>
+    <CheckBox fx:id="selectAll" mnemonicParsing="false" visible="false"/>
     <TextField fx:id="addInput" promptText="What needs to be done?" HBox.hgrow="ALWAYS"/>
     <stylesheets>
         <URL value="@additems.css"/>

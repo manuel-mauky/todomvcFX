@@ -21,8 +21,14 @@ public class ControlsController {
     public void initialize() {
         ListProperty<TodoItem> openItemsProperty = new SimpleListProperty<>(repository.openItemsProperty());
 
-        itemsLeftLabel.textProperty().bind(
-                Bindings.concat(openItemsProperty.sizeProperty().asString(), " items left"));
+
+        itemsLeftLabel.textProperty().bind(Bindings.createStringBinding(() -> {
+            final int size = openItemsProperty.getSize();
+
+            final String itemsText = size == 1 ? "item" : "items";
+
+            return size + " " + itemsText + " left";
+        }, openItemsProperty.sizeProperty()));
     }
 
     public void all() {

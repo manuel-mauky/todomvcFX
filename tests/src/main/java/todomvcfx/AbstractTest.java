@@ -43,6 +43,7 @@ public abstract class AbstractTest extends FxRobot {
         verifyThat("#addInput", hasText(""));
 
         verifyThat("#selectAll", CheckBoxMatchers.isSelected(false));
+        verifyThat("#selectAll", NodeMatchers.isInvisible());
 
         verifyThat("#itemsLeftLabel", LabeledMatchers.hasText("0 items left"));
         verifyThat("#showAll", ButtonMatchers.isSelected(true));
@@ -52,13 +53,25 @@ public abstract class AbstractTest extends FxRobot {
 
     @Test
     public void testAddItem() {
+        // before
+        verifyThat("#selectAll", NodeMatchers.isInvisible());
+
+
         clickOn("#addInput");
         write("todo1").push(KeyCode.ENTER);
 
 
         verifyThat("#items", hasItems(1));
+        verifyThat("#itemsLeftLabel", LabeledMatchers.hasText("1 item left"));
 
-        verifyThat("#itemsLeftLabel", LabeledMatchers.hasText("1 items left"));
+        // after
+        verifyThat("#selectAll", NodeMatchers.isVisible());
+
+
+        write("todo2").push(KeyCode.ENTER);
+
+        verifyThat("#items", hasItems(2));
+        verifyThat("#itemsLeftLabel", LabeledMatchers.hasText("2 items left"));
     }
 
 
@@ -313,17 +326,35 @@ public abstract class AbstractTest extends FxRobot {
         verifyThat("#selectAll", CheckBoxMatchers.isSelected(true));
     }
 
+    @Test
+    public void testSelectAllIsInvisibleAfterLastItemIsRemoved() {
+        // given
+        clickOn("#addInput");
+        write("todo0").push(KeyCode.ENTER);
+        write("todo1").push(KeyCode.ENTER);
+        verifyThat("#selectAll", NodeMatchers.isVisible());
+
+        // when
+        clickOn(getItemDeleteButton(1));
+        clickOn(getItemDeleteButton(0));
+
+        // then
+        verifyThat("#selectAll", NodeMatchers.isInvisible());
+    }
+
 
     @Test
     public void testSelectAllSwitchesToUncheckWhenNewItemIsAdded() {
         // given
+        addSomeItems();
+
         clickOn("#selectAll");
         verifyThat("#selectAll", CheckBoxMatchers.isSelected(true));
 
 
         // when
         clickOn("#addInput");
-        write("todo0").push(KeyCode.ENTER);
+        write("todo5").push(KeyCode.ENTER);
 
         // then
         verifyThat("#selectAll", CheckBoxMatchers.isSelected(false));
