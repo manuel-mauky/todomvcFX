@@ -63,11 +63,11 @@ public class ItemController {
 
     private void disableEditMode() {
         contentInput.setVisible(false);
-        contentLabel.setVisible(true);
+        contentBox.setVisible(true);
     }
 
     private void enableEditMode() {
-        contentLabel.setVisible(false);
+        contentBox.setVisible(false);
         contentInput.setVisible(true);
         contentInput.requestFocus();
     }

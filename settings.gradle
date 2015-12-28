@@ -2,3 +2,5 @@ rootProject.name = 'TodoMVC-JavaFX'
 
 include "tests"
 include "reference_impl"
+
+include "examples/mvvmfx"

@@ -77,11 +77,11 @@ public abstract class AbstractTest extends FxRobot {
 
 
     @Test
-    public void testSwitchEditMode() {
+    public void testSwitchEditMode() throws Exception {
         // given
         addSomeItems();
 
-        verifyThat(getItemLabel(1), NodeMatchers.isVisible());
+        verifyThat(getItemContentBox(1), NodeMatchers.isVisible());
         verifyThat(getItemEditTextField(1), NodeMatchers.isInvisible());
 
 
@@ -90,27 +90,27 @@ public abstract class AbstractTest extends FxRobot {
         doubleClickOn(getItemContentBox(1));
 
         // then
-        verifyThat(getItemLabel(1), NodeMatchers.isInvisible());
+        verifyThat(getItemContentBox(1), NodeMatchers.isInvisible());
         verifyThat(getItemEditTextField(1), NodeMatchers.isVisible());
 
         // when
         push(KeyCode.ENTER);
 
         // then
-        verifyThat(getItemLabel(1), NodeMatchers.isVisible());
+        verifyThat(getItemContentBox(1), NodeMatchers.isVisible());
         verifyThat(getItemEditTextField(1), NodeMatchers.isInvisible());
 
 
         // given
         doubleClickOn(getItemContentBox(1));
-        verifyThat(getItemLabel(1), NodeMatchers.isInvisible());
+        verifyThat(getItemContentBox(1), NodeMatchers.isInvisible());
         verifyThat(getItemEditTextField(1), NodeMatchers.isVisible());
 
         // when
-        clickOn(getItemLabel(2)); // other label
+        clickOn(getItemContentBox(2)); // other label
 
         // then
-        verifyThat(getItemLabel(1), NodeMatchers.isVisible());
+        verifyThat(getItemContentBox(1), NodeMatchers.isVisible());
         verifyThat(getItemEditTextField(1), NodeMatchers.isInvisible());
     }
 
