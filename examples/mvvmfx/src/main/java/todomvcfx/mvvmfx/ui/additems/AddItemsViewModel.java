@@ -1,7 +1,7 @@
 package todomvcfx.mvvmfx.ui.additems;
 
 import de.saxsys.mvvmfx.ViewModel;
-import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
@@ -9,7 +9,10 @@ import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+import org.fxmisc.easybind.EasyBind;
 import todomvcfx.mvvmfx.model.TodoItem;
 import todomvcfx.mvvmfx.model.TodoItemStore;
 
@@ -22,18 +25,33 @@ public class AddItemsViewModel implements ViewModel {
 	private BooleanProperty allSelected = new SimpleBooleanProperty();
 	private StringProperty newItemValue = new SimpleStringProperty("");
 	
-	private ReadOnlyBooleanWrapper allSelectedVisible = new ReadOnlyBooleanWrapper();
-	
+    private ReadOnlyBooleanWrapper allSelectedVisible = new ReadOnlyBooleanWrapper();
+
+    private boolean itemsListenerActive = false;
+
 	public AddItemsViewModel() {
 		allSelectedVisible.bind(Bindings.isEmpty(TodoItemStore.getInstance().getItems()).not());
 
-        TodoItemStore.getInstance().getItems().addListener((ListChangeListener<TodoItem>) change ->
-                Platform.runLater(() -> allSelected.setValue(
-                    TodoItemStore.getInstance().getItems().stream().allMatch(TodoItem::isCompleted))));
+
+        // create a list that will fire update events when completed flag is updated.
+        ObservableList<TodoItem> items = FXCollections.observableArrayList(item -> new Observable[]{item.completedProperty()});
+        EasyBind.listBind(items, TodoItemStore.getInstance().getItems());
+
+        items.addListener((ListChangeListener<TodoItem>) change -> {
+            if(itemsListenerActive) {
+                allSelected.setValue(
+                        TodoItemStore.getInstance().getItems().stream().allMatch(TodoItem::isCompleted));
+            }
+        });
+
+        itemsListenerActive = true;
 	}
 
     public void selectAll() {
+        itemsListenerActive = false;
+        allSelected.setValue(!allSelected.get());
         TodoItemStore.getInstance().getItems().forEach(item -> item.setCompleted(allSelected.getValue()));
+        itemsListenerActive = true;
     }
 	
 	

@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
  */
 public class TodoItemStore {
 	
-	private ObservableList<TodoItem> items = FXCollections.observableArrayList(TodoItem::getObservables);
+	private ObservableList<TodoItem> items = FXCollections.observableArrayList();
 	
 	
 	private static final TodoItemStore SINGLETON = new TodoItemStore();

@@ -1,6 +1,5 @@
 package todomvcfx.mvvmfx.model;
 
-import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -41,9 +40,5 @@ public class TodoItem {
 
     public void setCompleted(boolean completed) {
         this.completed.set(completed);
-    }
-
-    public Observable[] getObservables() {
-        return new Observable[]{completedProperty()};
     }
 }
