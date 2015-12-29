@@ -8,7 +8,7 @@ public class ReferenceImplTest extends AbstractTest {
 
     @Override
     public Class<? extends Application> getAppClass() {
-        return App.class;
+        return ReferenceApp.class;
     }
 
 
