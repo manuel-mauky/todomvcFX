@@ -1,6 +1,7 @@
 package todomvcfx.mvvmfx.ui.additems;
 
 import de.saxsys.mvvmfx.ViewModel;
+import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -12,7 +13,6 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import org.fxmisc.easybind.EasyBind;
 import todomvcfx.mvvmfx.model.TodoItem;
 import todomvcfx.mvvmfx.model.TodoItemStore;
 
@@ -27,34 +27,30 @@ public class AddItemsViewModel implements ViewModel {
 	
     private ReadOnlyBooleanWrapper allSelectedVisible = new ReadOnlyBooleanWrapper();
 
-    private boolean itemsListenerActive = false;
+    private TodoItemStore itemStore = TodoItemStore.getInstance();
+
+
+    // In contrast to the ItemStore list, this list will fire updates when the completed flag of the elements is updated.
+    private ObservableList<TodoItem> todoItemsWithCompletedUpdater = FXCollections.observableArrayList(item -> new Observable[]{item.completedProperty()});
 
 	public AddItemsViewModel() {
-		allSelectedVisible.bind(Bindings.isEmpty(TodoItemStore.getInstance().getItems()).not());
+		allSelectedVisible.bind(Bindings.isNotEmpty(TodoItemStore.getInstance().getItems()));
 
+        Bindings.bindContent(todoItemsWithCompletedUpdater, itemStore.getItems());
 
-        // create a list that will fire update events when completed flag is updated.
-        ObservableList<TodoItem> items = FXCollections.observableArrayList(item -> new Observable[]{item.completedProperty()});
-        EasyBind.listBind(items, TodoItemStore.getInstance().getItems());
+        todoItemsWithCompletedUpdater.addListener((ListChangeListener<TodoItem>) c -> {
+            while(c.next()) {
+                boolean allCompleted = itemStore.getItems().stream().allMatch(TodoItem::isCompleted);
 
-        items.addListener((ListChangeListener<TodoItem>) change -> {
-            if(itemsListenerActive) {
-                allSelected.setValue(
-                        TodoItemStore.getInstance().getItems().stream().allMatch(TodoItem::isCompleted));
+                Platform.runLater(() -> allSelected.setValue(allCompleted));
             }
         });
-
-        itemsListenerActive = true;
 	}
 
     public void selectAll() {
-        itemsListenerActive = false;
-        allSelected.setValue(!allSelected.get());
         TodoItemStore.getInstance().getItems().forEach(item -> item.setCompleted(allSelected.getValue()));
-        itemsListenerActive = true;
     }
-	
-	
+
 	public void addItem() {
 		final String newValue = newItemValue.get();
 		if (newValue != null && !newValue.trim().isEmpty()) {
@@ -66,8 +62,7 @@ public class AddItemsViewModel implements ViewModel {
 	public StringProperty newItemValueProperty() {
 		return newItemValue;
 	}
-	
-	
+
 	public BooleanProperty allSelectedProperty() {
 		return allSelected;
 	}
