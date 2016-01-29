@@ -4,3 +4,4 @@ include "tests"
 include "reference_impl"
 
 include "examples/mvvmfx"
+include "examples/fluxfx"

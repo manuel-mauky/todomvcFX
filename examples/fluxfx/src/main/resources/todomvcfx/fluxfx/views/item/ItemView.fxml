@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import java.net.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<HBox fx:controller="todomvcfx.fluxfx.views.item.ItemView" fx:id="root" alignment="CENTER_LEFT" minHeight="-Infinity"
+      minWidth="-Infinity" styleClass="item_root"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <CheckBox fx:id="completed" mnemonicParsing="false"/>
+    <StackPane alignment="CENTER_LEFT" HBox.hgrow="ALWAYS">
+        <HBox fx:id="contentBox" styleClass="content_box">
+            <Label fx:id="contentLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                   text="Label" HBox.hgrow="ALWAYS"/>
+            <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#delete">
+                <graphic>
+                    <FontAwesomeIconView glyphName="CLOSE" size="1.5em" styleClass="close_icon"/>
+                </graphic>
+            </Button>
+        </HBox>
+        <TextField fx:id="contentInput" promptText="What needs to be done?" visible="false"/>
+    </StackPane>
+    <stylesheets>
+        <URL value="@itemview.css"/>
+    </stylesheets>
+</HBox>
