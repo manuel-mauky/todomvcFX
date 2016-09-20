@@ -8,7 +8,7 @@ repositories {
 
 
 dependencies {
-    compile "de.saxsys:mvvmfx:1.5.0-SNAPSHOT"
+    compile "de.saxsys:mvvmfx:1.5.2"
     compile 'org.fxmisc.easybind:easybind:1.0.3'
     compile "eu.lestard:easy-di:0.4.0"
 

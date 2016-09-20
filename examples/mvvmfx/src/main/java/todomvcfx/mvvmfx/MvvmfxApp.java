@@ -19,10 +19,11 @@ public class MvvmfxApp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		stage.setTitle("TodoMVVM");
-		
+
 		final Parent parent = FluentViewLoader.fxmlView(MainView.class).load().getView();
-		
-		stage.setScene(new Scene(parent));
+        final Scene scene = new Scene(parent);
+
+        stage.setScene(scene);
 		stage.show();
 	}
 }
