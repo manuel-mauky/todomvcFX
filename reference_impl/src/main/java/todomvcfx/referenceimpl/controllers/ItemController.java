@@ -52,13 +52,7 @@ public class ItemController {
             }
         });
 
-        root.setOnMouseEntered(event -> {
-            deleteButton.setVisible(true);
-        });
-
-        root.setOnMouseExited(event -> {
-            deleteButton.setVisible(false);
-        });
+        deleteButton.visibleProperty().bind(root.hoverProperty());
     }
 
     private void disableEditMode() {
