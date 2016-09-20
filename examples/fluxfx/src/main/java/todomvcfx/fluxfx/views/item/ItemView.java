@@ -1,14 +1,13 @@
 package todomvcfx.fluxfx.views.item;
 
 import eu.lestard.fluxfx.View;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import org.reactfx.EventSource;
 import todomvcfx.fluxfx.actions.ChangeCompletedForSingleItemAction;
 import todomvcfx.fluxfx.actions.DeleteItemAction;
 import todomvcfx.fluxfx.actions.EditAction;
@@ -37,39 +36,55 @@ public class ItemView implements View {
 
     private String id;
 
-    // state
-    private BooleanProperty editMode = new SimpleBooleanProperty();
+    // internal state
+    private EventSource<Boolean> editMode = new EventSource<>();
+
 
     public void initialize() {
-        deleteButton.setVisible(false);
-        root.setOnMouseEntered(event -> deleteButton.setVisible(true));
-        root.setOnMouseExited(event -> deleteButton.setVisible(false));
+        deleteButton.visibleProperty().bind(root.hoverProperty());
 
-
-        completed.setOnAction(event -> publishAction(new ChangeCompletedForSingleItemAction(id, completed.isSelected())));
+        completed.setOnAction(event -> publishCompletedAction());
 
         contentLabel.setOnMouseClicked(event -> {
             if(event.getClickCount() > 1) {
-                editMode.setValue(true);
+                editMode.push(true);
             }
         });
 
+        // when the textfield loses the focus we leave edit mode
         contentInput.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue){
-                editMode.setValue(false);
+                editMode.push(false);
             }
         });
 
+        // when the user presses ENTER while the focus is at the text field
+        // we leave edit mode.
         contentInput.setOnAction(event -> {
-            editMode.setValue(false);
+            editMode.push(false);
         });
 
-        editMode.addListener((observable, oldValue, newValue) -> {
-            if(!newValue) {
-                publishAction(new EditAction(id, contentInput.getText()));
-            }
-            initEditMode(newValue);
-        });
+
+        editMode.subscribe(this::changeEditMode);
+        editMode.filter(Boolean.FALSE::equals) // only when we are leaving edit mode ...
+                .subscribe(b -> publishEditAction()); // we are publish an edit action.
+    }
+
+    private void publishCompletedAction() {
+        publishAction(new ChangeCompletedForSingleItemAction(id, completed.isSelected()));
+    }
+
+    private void publishEditAction() {
+        publishAction(new EditAction(id, contentInput.getText()));
+    }
+
+    private void publishDeleteAction() {
+        publishAction(new DeleteItemAction(id));
+    }
+
+    @FXML
+    public void delete() {
+        publishDeleteAction();
     }
 
     public void update(TodoItem item) {
@@ -82,19 +97,14 @@ public class ItemView implements View {
         } else {
             contentLabel.getStyleClass().removeAll(STRIKETHROUGH_CSS_CLASS);
         }
-
     }
 
-    private void initEditMode(boolean editMode){
+    private void changeEditMode(boolean editMode){
         contentInput.setVisible(editMode);
         if(editMode) {
             contentInput.requestFocus();
         }
         contentBox.setVisible(!editMode);
         completed.setVisible(!editMode);
-    }
-
-    public void delete() {
-        publishAction(new DeleteItemAction(id));
     }
 }
