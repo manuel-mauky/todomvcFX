@@ -1,5 +1,5 @@
 apply plugin: "java"
 
 dependencies {
-    compile "eu.lestard:easy-di:0.4.0"
+    compile "eu.lestard:easy-di:0.3.0"
 }
