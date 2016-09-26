@@ -365,25 +365,25 @@ public abstract class AbstractTest extends FxRobot {
     // HELPERS
 
     private TextField getItemEditTextField(int index) {
-        return (TextField) lookup("#items").lookup("#contentInput").selectAt(index).queryFirst();
+        return (TextField) lookup("#items").lookup("#contentInput").nth(index).query();
     }
 
     private Label getItemLabel(int index) {
-        return (Label) lookup("#items").lookup("#contentLabel").selectAt(index).queryFirst();
+        return (Label) lookup("#items").lookup("#contentLabel").nth(index).query();
     }
 
 
 
     private Node getItemContentBox(int index) {
-        return lookup("#items").lookup("#contentBox").selectAt(index).queryFirst();
+        return lookup("#items").lookup("#contentBox").nth(index).query();
     }
 
     private CheckBox getItemCheckbox(int index) {
-        return (CheckBox)lookup("#items").lookup("#completed").selectAt(index).queryFirst();
+        return (CheckBox)lookup("#items").lookup("#completed").nth(index).query();
     }
 
     private Button getItemDeleteButton(int index) {
-        return (Button)lookup("#items").lookup("#deleteButton").selectAt(index).queryFirst();
+        return (Button)lookup("#items").lookup("#deleteButton").nth(index).query();
     }
 
 
