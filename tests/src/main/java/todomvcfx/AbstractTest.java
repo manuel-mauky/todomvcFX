@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.matcher.base.NodeMatchers;
@@ -23,6 +24,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.ListViewMatchers.hasItems;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 
+@Category({UiTest.class})
 public abstract class AbstractTest extends FxRobot {
 
 

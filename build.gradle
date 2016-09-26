@@ -6,13 +6,29 @@ subprojects {
 
     repositories {
         mavenCentral()
-        mavenLocal()
 	    jcenter()
     }
 
     dependencies {
         compile 'de.jensd:fontawesomefx:8.5'
         testCompile project(":tests")
+    }
+
+
+    // use this task to execute the TestFX UI tests.
+    task acceptanceTests (type: Test) {
+        test {
+            useJUnit {
+                includeCategories 'todomvcfx.UiTest'
+            }
+        }
+    }
+
+    // exclude TestFX UI tests from normal build
+    test {
+        useJUnit {
+            excludeCategories 'todomvcfx.UiTest'
+        }
     }
 }
 
