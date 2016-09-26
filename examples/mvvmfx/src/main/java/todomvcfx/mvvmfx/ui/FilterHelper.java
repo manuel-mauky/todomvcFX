@@ -15,12 +15,26 @@ import java.util.stream.Collectors;
  * @author manuel.mauky
  */
 public class FilterHelper {
-	
+
+	/**
+	 * Creates an observable list which contains the items of the given observable list, filtered by a given filter criterion.
+	 *
+	 * The function is applied to all items in the list to obtain an observable boolean which is determines whether the
+	 * item is included in the filtered list or not.
+	 * The item will be included when the observable boolean is <code>true</code>.
+	 */
 	public static <T> ObservableList<T> filter(ObservableList<T> items,
 			Function<T, ObservableBooleanValue> conditionExtractor) {
 		return filterInternal(items, conditionExtractor, t -> conditionExtractor.apply(t).get());
 	}
-	
+
+	/**
+	 * Creates an observable list which contains the items of the given observable list, filtered by a given filter criterion.
+	 *
+	 * The function is applied to all items in the list to obtain an observable boolean which is determines whether the
+	 * item is included in the filtered list or not.
+	 * The item will be included when the observable boolean is <code>false</code>.
+	 */
 	public static <T> ObservableList<T> filterInverted(ObservableList<T> items,
 			Function<T, ObservableBooleanValue> conditionExtractor) {
 		return filterInternal(items, conditionExtractor, t -> !conditionExtractor.apply(t).get());
@@ -36,8 +50,7 @@ public class FilterHelper {
 					.filter(predicate)
 					.collect(Collectors.toList());
 			
-			filteredItems.clear();
-			filteredItems.addAll(completed);
+			filteredItems.setAll(completed);
 		};
 		
 		items.addListener((ListChangeListener<T>) c -> {

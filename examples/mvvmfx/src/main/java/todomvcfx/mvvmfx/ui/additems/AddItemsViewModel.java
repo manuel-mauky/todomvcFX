@@ -27,34 +27,36 @@ public class AddItemsViewModel implements ViewModel {
 	
     private ReadOnlyBooleanWrapper allSelectedVisible = new ReadOnlyBooleanWrapper();
 
-    private TodoItemStore itemStore = TodoItemStore.getInstance();
-
-
     // In contrast to the ItemStore list, this list will fire updates when the completed flag of the elements is updated.
-    private ObservableList<TodoItem> todoItemsWithCompletedUpdater = FXCollections.observableArrayList(item -> new Observable[]{item.completedProperty()});
+    private ObservableList<TodoItem> todoItemsWithCompletedUpdater =
+			FXCollections.observableArrayList(item -> new Observable[]{item.completedProperty()});
 
-	public AddItemsViewModel() {
-		allSelectedVisible.bind(Bindings.isNotEmpty(TodoItemStore.getInstance().getItems()));
+	private TodoItemStore store;
 
-        Bindings.bindContent(todoItemsWithCompletedUpdater, itemStore.getItems());
+	public AddItemsViewModel(TodoItemStore store) {
+		this.store = store;
+
+		allSelectedVisible.bind(Bindings.isNotEmpty(store.getItems()));
+
+        Bindings.bindContent(todoItemsWithCompletedUpdater, store.getItems());
 
         todoItemsWithCompletedUpdater.addListener((ListChangeListener<TodoItem>) c -> {
             while(c.next()) {
-                boolean allCompleted = itemStore.getItems().stream().allMatch(TodoItem::isCompleted);
-
-                Platform.runLater(() -> allSelected.setValue(allCompleted));
-            }
+				boolean allCompleted = this.store.getItems().stream().allMatch(TodoItem::isCompleted);
+				Platform.runLater(() -> allSelected.setValue(allCompleted));
+			}
         });
 	}
 
-    public void selectAll() {
-        TodoItemStore.getInstance().getItems().forEach(item -> item.setCompleted(allSelected.getValue()));
+	public void selectAll() {
+		Boolean newValue = allSelected.getValue();
+		store.getItems().forEach(item -> item.setCompleted(newValue));
     }
 
 	public void addItem() {
 		final String newValue = newItemValue.get();
 		if (newValue != null && !newValue.trim().isEmpty()) {
-			TodoItemStore.getInstance().getItems().add(new TodoItem(newValue));
+			store.addNewItem(new TodoItem(newValue));
 			newItemValue.set("");
 		}
 	}

@@ -22,8 +22,8 @@ public class ItemOverviewViewModel implements ViewModel {
 	private final ObservableList<ItemViewModel> completedItems;
 	private final ObservableList<ItemViewModel> activeItems;
 	
-	public ItemOverviewViewModel() {
-		allItems = new ListTransformation<>(TodoItemStore.getInstance().getItems(), ItemViewModel::new);
+	public ItemOverviewViewModel(TodoItemStore store) {
+		allItems = new ListTransformation<>(store.getItems(), item -> new ItemViewModel(item, () -> store.deleteItem(item)));
 		
 		completedItems = FilterHelper.filter(allItems.getTargetList(), ItemViewModel::completedProperty);
 		activeItems = FilterHelper.filterInverted(allItems.getTargetList(), ItemViewModel::completedProperty);
