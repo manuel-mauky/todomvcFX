@@ -22,21 +22,21 @@ public class AddItemsController {
 
     public void initialize() {
 
-//        addInput.setOnAction(event -> {
-//            final String currentText = addInput.getText();
-//
-//            // check input
-//            if(currentText == null || currentText.trim().isEmpty()) {
-//                return;
-//            }
-//
-//            // create and add item
-//            TodoItem newItem = new TodoItem(currentText);
-//            repository.addItem(newItem);
-//
-//            // reset input
-//            addInput.setText("");
-//        });
+        addInput.setOnAction(event -> {
+            final String currentText = addInput.getText();
+
+            // check input
+            if(currentText == null || currentText.trim().isEmpty()) {
+                return;
+            }
+
+            // create and add item
+            TodoItem newItem = new TodoItem(currentText);
+            repository.addItem(newItem);
+
+            // reset input
+            addInput.setText("");
+        });
 
 
 
