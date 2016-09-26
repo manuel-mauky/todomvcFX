@@ -15,11 +15,12 @@ public class ControlsViewModelTest {
     private TodoItem item1;
     private TodoItem item2;
 
-    private TodoItemStore itemStore = TodoItemStore.getInstance();
+    private TodoItemStore itemStore;
 
     @Before
     public void setup() {
-        viewModel = new ControlsViewModel();
+        itemStore = new TodoItemStore();
+        viewModel = new ControlsViewModel(itemStore);
 
         item1 = new TodoItem("1");
         item2 = new TodoItem("2");

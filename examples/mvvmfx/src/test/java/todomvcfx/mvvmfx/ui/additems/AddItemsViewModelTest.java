@@ -1,13 +1,16 @@
 package todomvcfx.mvvmfx.ui.additems;
 
-import org.junit.After;
+import de.saxsys.mvvmfx.testingutils.FxTestingUtils;
+import de.saxsys.mvvmfx.testingutils.jfxrunner.JfxRunner;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import todomvcfx.mvvmfx.model.TodoItem;
 import todomvcfx.mvvmfx.model.TodoItemStore;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@RunWith(JfxRunner.class)
 public class AddItemsViewModelTest {
 
 
@@ -17,11 +20,12 @@ public class AddItemsViewModelTest {
     private TodoItem item2;
     private TodoItem item3;
 
-    private TodoItemStore itemStore = TodoItemStore.getInstance();
+    private TodoItemStore itemStore;
 
     @Before
     public void setup() {
-        viewModel = new AddItemsViewModel();
+        itemStore = new TodoItemStore();
+        viewModel = new AddItemsViewModel(itemStore);
 
         item1 = new TodoItem("1");
         item2 = new TodoItem("2");
@@ -29,12 +33,6 @@ public class AddItemsViewModelTest {
 
         itemStore.getItems().clear();
     }
-
-    @After
-    public void tearDown() {
-        itemStore.getItems().clear();
-    }
-
 
     @Test
     public void testAddNewItem() {
@@ -88,7 +86,9 @@ public class AddItemsViewModelTest {
 
 
         // when
+        viewModel.allSelectedProperty().setValue(true);
         viewModel.selectAll();
+        FxTestingUtils.waitForUiThread();
 
         // then
         assertThat(viewModel.allSelectedProperty().get()).isTrue();
@@ -111,6 +111,7 @@ public class AddItemsViewModelTest {
 
         // when
         item3.setCompleted(true);
+        FxTestingUtils.waitForUiThread();
 
         // then
         assertThat(viewModel.allSelectedProperty().get()).isTrue();
@@ -125,10 +126,14 @@ public class AddItemsViewModelTest {
         item1.setCompleted(true);
         item2.setCompleted(true);
         item3.setCompleted(true);
+
+        FxTestingUtils.waitForUiThread();
         assertThat(viewModel.allSelectedProperty().get()).isTrue();
 
         // when
         item1.setCompleted(false);
+        FxTestingUtils.waitForUiThread();
+
 
         // then
         assertThat(viewModel.allSelectedProperty().get()).isFalse();

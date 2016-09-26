@@ -22,8 +22,8 @@ public class ControlsViewModel implements ViewModel {
 	
 	private NotificationCenter notificationCenter = MvvmFX.getNotificationCenter();
 	
-	public ControlsViewModel() {
-		final ObservableList<TodoItem> items = TodoItemStore.getInstance().getItems();
+	public ControlsViewModel(TodoItemStore store) {
+		final ObservableList<TodoItem> items = store.getItems();
 		
 		ObservableList<TodoItem> completedItems = FilterHelper.filterInverted(items, TodoItem::completedProperty);
 		

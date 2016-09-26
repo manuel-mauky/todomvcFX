@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import todomvcfx.mvvmfx.model.TodoItem;
-import todomvcfx.mvvmfx.model.TodoItemStore;
 
 /**
  * @author manuel.mauky
@@ -21,15 +20,17 @@ public class ItemViewModel implements ViewModel {
 	private StringProperty content = new SimpleStringProperty();
 	
 	private TodoItem item;
-	
-	public ItemViewModel(TodoItem item) {
+	private Runnable onDelete;
+
+	public ItemViewModel(TodoItem item, Runnable onDelete) {
 		this.item = item;
+		this.onDelete = onDelete;
 		content.bindBidirectional(item.textProperty());
 		completed.bindBidirectional(item.completedProperty());
 	}
 	
 	public void delete() {
-		TodoItemStore.getInstance().getItems().remove(item);
+		onDelete.run();
 	}
 	
 	public StringProperty contentProperty() {
