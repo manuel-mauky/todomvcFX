@@ -10,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
 import org.testfx.matcher.base.NodeMatchers;
@@ -23,6 +24,7 @@ import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.matcher.control.ListViewMatchers.hasItems;
 import static org.testfx.matcher.control.TextInputControlMatchers.hasText;
 
+@Category({UiTest.class})
 public abstract class AbstractTest extends FxRobot {
 
 
@@ -365,25 +367,25 @@ public abstract class AbstractTest extends FxRobot {
     // HELPERS
 
     private TextField getItemEditTextField(int index) {
-        return (TextField) lookup("#items").lookup("#contentInput").selectAt(index).queryFirst();
+        return (TextField) lookup("#items").lookup("#contentInput").nth(index).query();
     }
 
     private Label getItemLabel(int index) {
-        return (Label) lookup("#items").lookup("#contentLabel").selectAt(index).queryFirst();
+        return (Label) lookup("#items").lookup("#contentLabel").nth(index).query();
     }
 
 
 
     private Node getItemContentBox(int index) {
-        return lookup("#items").lookup("#contentBox").selectAt(index).queryFirst();
+        return lookup("#items").lookup("#contentBox").nth(index).query();
     }
 
     private CheckBox getItemCheckbox(int index) {
-        return (CheckBox)lookup("#items").lookup("#completed").selectAt(index).queryFirst();
+        return (CheckBox)lookup("#items").lookup("#completed").nth(index).query();
     }
 
     private Button getItemDeleteButton(int index) {
-        return (Button)lookup("#items").lookup("#deleteButton").selectAt(index).queryFirst();
+        return (Button)lookup("#items").lookup("#deleteButton").nth(index).query();
     }
 
 

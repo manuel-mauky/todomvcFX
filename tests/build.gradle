@@ -1,7 +1,7 @@
 apply plugin: "java"
 
 dependencies {
-    compile "org.testfx:testfx-core:4.0.1-alpha"
-    compile "org.testfx:testfx-junit:4.0.1-alpha"
+    compile "org.testfx:testfx-core:4.0.4-alpha"
+    compile "org.testfx:testfx-junit:4.0.4-alpha"
     compile "junit:junit:4.11"
 }
