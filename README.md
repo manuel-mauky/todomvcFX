@@ -1,6 +1,6 @@
 # TodoMVC JavaFX
 
-[![Build Status](https://travis-ci.org/lestard/todomvcFX/.svg?branch=master)](https://travis-ci.org/lestard/todomvcFX)
+[![Build Status](https://travis-ci.org/lestard/todomvcFX.svg?branch=master)](https://travis-ci.org/lestard/todomvcFX)
 
 TodoMVC-JavaFX is a collection of different implementations of the same JavaFX application. It aims to provide examples with different design patterns, frameworks, programming languages and programming styles. 
 
