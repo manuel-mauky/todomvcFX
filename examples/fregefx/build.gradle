@@ -1,0 +1,20 @@
+plugins {
+    id "org.frege-lang" version "0.8"
+}
+
+
+apply plugin: "java"
+
+compileFrege {
+    target = 1.7
+}
+compileTestFrege {
+    target = 1.7
+}
+
+
+dependencies {
+//    compile "org.frege-lang:frege:3.24-7.30"
+    compile "org.frege-lang:frege:3.22.367-g2737683"
+    compile "org.frege-lang:fregefx:0.3.1"
+}

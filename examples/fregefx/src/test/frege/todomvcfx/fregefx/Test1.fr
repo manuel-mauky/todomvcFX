@@ -1,0 +1,4 @@
+module todomvcfx.fregefx.Test1 where
+
+import Test.QuickCheck
+
