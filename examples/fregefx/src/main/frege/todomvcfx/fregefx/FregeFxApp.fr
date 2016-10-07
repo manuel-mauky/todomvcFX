@@ -1,0 +1,22 @@
+module todomvcfx.fregefx.FregeFxApp where
+
+
+import frege.Prelude hiding(ListView)
+import fregefx.JavaFxType
+import fregefx.JavaFxAll
+import fregefx.JavaFxUtils
+
+
+main args =
+    FregeFX.launch $ buildUI
+
+fxml = FregeFX.fxml "todomvcfx.fregefx.HelloFrege"
+
+buildUI :: Stage -> JFX ()
+buildUI stage = do
+    stage.setTitle "Hello"
+    content <- fxml "/Main.fxml"
+
+    scene   <- Scene.new content
+    stage.setScene scene
+    Stage.show stage

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import java.net.URL?>
+<HBox styleClass="add_item_root"
+      alignment="CENTER_LEFT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <CheckBox fx:id="selectAll" mnemonicParsing="false" visible="false"/>
+    <TextField fx:id="addInput" promptText="What needs to be done?" HBox.hgrow="ALWAYS"/>
+    <stylesheets>
+        <URL value="@additems.css"/>
+    </stylesheets>
+</HBox>

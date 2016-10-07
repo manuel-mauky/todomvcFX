@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.HBox?>
+<HBox alignment="CENTER" spacing="20.0"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <Label fx:id="itemsLeftLabel" text="X items left"/>
+    <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="10.0">
+        <ToggleButton fx:id="showAll" mnemonicParsing="false" selected="true" text="All">
+            <toggleGroup>
+                <ToggleGroup fx:id="stateGroup"/>
+            </toggleGroup>
+        </ToggleButton>
+        <ToggleButton fx:id="showActive" mnemonicParsing="false" text="Active" toggleGroup="$stateGroup"/>
+        <ToggleButton fx:id="showCompleted" mnemonicParsing="false" text="Completed" toggleGroup="$stateGroup"/>
+        <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+        </padding>
+    </HBox>
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</HBox>
