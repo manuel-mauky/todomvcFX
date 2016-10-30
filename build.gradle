@@ -1,3 +1,4 @@
+apply plugin: 'base'
 
 subprojects {
     apply plugin: "java"
@@ -5,15 +6,13 @@ subprojects {
     targetCompatibility = 1.8
 
     repositories {
-        mavenCentral()
-	    jcenter()
+        jcenter()
     }
 
     dependencies {
         compile 'de.jensd:fontawesomefx:8.5'
         testCompile project(":tests")
     }
-
 
     // use this task to execute the TestFX UI tests.
     task acceptanceTests (type: Test) {
@@ -30,9 +29,4 @@ subprojects {
             excludeCategories 'todomvcfx.UiTest'
         }
     }
-}
-
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '2.9'
 }
