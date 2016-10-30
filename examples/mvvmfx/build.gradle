@@ -1,4 +1,7 @@
 apply plugin: "java"
+apply plugin: 'application'
+
+mainClassName = 'todomvcfx.mvvmfx.MvvmfxApp'
 
 repositories {
     maven{
