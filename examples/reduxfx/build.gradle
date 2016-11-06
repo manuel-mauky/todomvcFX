@@ -1,0 +1,10 @@
+apply plugin: 'application'
+
+mainClassName = 'todomvcfx.reduxfx.ReduxFXApp'
+
+dependencies {
+    compile 'com.netopyr.reduxfx:reduxfx:0.0.1'
+    compile 'io.javaslang:javaslang:2.0.3'
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'de.jensd:fontawesomefx:8.5'
+}

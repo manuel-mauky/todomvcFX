@@ -5,3 +5,4 @@ include "reference_impl"
 
 include "examples/mvvmfx"
 include "examples/fluxfx"
+include "examples/reduxfx"
